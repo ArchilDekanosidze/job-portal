@@ -1,59 +1,55 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\Front\TermsController;
-use App\Http\Controllers\Front\PrivacyController;
-use App\Http\Controllers\Front\JobCategoryController;
-use App\Http\Controllers\Front\PostController;
-use App\Http\Controllers\Front\FaqController;
-use App\Http\Controllers\Front\ContactController;
-use App\Http\Controllers\Front\PricingController;
-use App\Http\Controllers\Front\LoginController;
-use App\Http\Controllers\Front\SignupController;
-use App\Http\Controllers\Front\ForgetPasswordController;
-use App\Http\Controllers\Front\JobListingController;
-use App\Http\Controllers\Front\CompanyListingController;
-use App\Http\Controllers\Front\SubscriberController;
-
-use App\Http\Controllers\Company\CompanyController;
-
-use App\Http\Controllers\Candidate\CandidateController;
-
-use App\Http\Controllers\Admin\AdminHomeController;
-use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\AdminHomePageController;
-use App\Http\Controllers\Admin\AdminFaqPageController;
-use App\Http\Controllers\Admin\AdminBlogPageController;
-use App\Http\Controllers\Admin\AdminTermPageController;
-use App\Http\Controllers\Admin\AdminPrivacyPageController;
-use App\Http\Controllers\Admin\AdminJobCategoryPageController;
-use App\Http\Controllers\Admin\AdminContactPageController;
-use App\Http\Controllers\Admin\AdminJobCategoryController;
-use App\Http\Controllers\Admin\AdminJobLocationController;
-use App\Http\Controllers\Admin\AdminJobTypeController;
-use App\Http\Controllers\Admin\AdminJobExperienceController;
-use App\Http\Controllers\Admin\AdminJobGenderController;
-use App\Http\Controllers\Admin\AdminJobSalaryRangeController;
-use App\Http\Controllers\Admin\AdminCompanyLocationController;
-use App\Http\Controllers\Admin\AdminCompanyIndustryController;
-use App\Http\Controllers\Admin\AdminCompanySizeController;
-use App\Http\Controllers\Admin\AdminPricingPageController;
-use App\Http\Controllers\Admin\AdminOtherPageController;
-use App\Http\Controllers\Admin\AdminWhyChooseController;
-use App\Http\Controllers\Admin\AdminTestimonialController;
-use App\Http\Controllers\Admin\AdminPostController;
-use App\Http\Controllers\Admin\AdminFaqController;
-use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminBannerController;
-use App\Http\Controllers\Admin\AdminSubscriberController;
-use App\Http\Controllers\Admin\AdminSettingController;
-use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminBlogPageController;
 use App\Http\Controllers\Admin\AdminCandidateController;
-
-
+use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminCompanyIndustryController;
+use App\Http\Controllers\Admin\AdminCompanyLocationController;
+use App\Http\Controllers\Admin\AdminCompanySizeController;
+use App\Http\Controllers\Admin\AdminContactPageController;
+use App\Http\Controllers\Admin\AdminFaqController;
+use App\Http\Controllers\Admin\AdminFaqPageController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminHomePageController;
+use App\Http\Controllers\Admin\AdminJobCategoryController;
+use App\Http\Controllers\Admin\AdminJobCategoryPageController;
+use App\Http\Controllers\Admin\AdminJobExperienceController;
+use App\Http\Controllers\Admin\AdminJobGenderController;
+use App\Http\Controllers\Admin\AdminJobLocationController;
+use App\Http\Controllers\Admin\AdminJobSalaryRangeController;
+use App\Http\Controllers\Admin\AdminJobTypeController;
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminOtherPageController;
+use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminPricingPageController;
+use App\Http\Controllers\Admin\AdminPrivacyPageController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\AdminSubscriberController;
+use App\Http\Controllers\Admin\AdminTermPageController;
+use App\Http\Controllers\Admin\AdminTestimonialController;
+use App\Http\Controllers\Admin\AdminWhyChooseController;
+use App\Http\Controllers\Candidate\CandidateController;
+use App\Http\Controllers\Company\CompanyController;
+use App\Http\Controllers\Front\CompanyListingController;
+use App\Http\Controllers\Front\ContactController;
+use App\Http\Controllers\Front\FaqController;
+use App\Http\Controllers\Front\ForgetPasswordController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\JobCategoryController;
+use App\Http\Controllers\Front\JobListingController;
+use App\Http\Controllers\Front\LoginController;
+use App\Http\Controllers\Front\PostController;
+use App\Http\Controllers\Front\PricingController;
+use App\Http\Controllers\Front\PrivacyController;
+use App\Http\Controllers\Front\SignupController;
+use App\Http\Controllers\Front\SubscriberController;
+use App\Http\Controllers\Front\TermsController;
+use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('terms-of-use', [TermsController::class, 'index'])->name('terms');
@@ -80,7 +76,6 @@ Route::get('create-account', [SignupController::class, 'index'])->name('signup')
 Route::post('subscriber/send-email', [SubscriberController::class, 'send_email'])->name('subscriber_send_email');
 Route::get('subscriber/verify/{email}/{token}', [SubscriberController::class, 'verify'])->name('subscriber_email_verify');
 
-
 /* Company */
 Route::post('company_login_submit', [LoginController::class, 'company_login_submit'])->name('company_login_submit');
 Route::post('company_signup_submit', [SignupController::class, 'company_signup_submit'])->name('company_signup_submit');
@@ -91,9 +86,8 @@ Route::post('forget-password/company/submit', [ForgetPasswordController::class, 
 Route::get('reset-password/company/{token}/{email}', [ForgetPasswordController::class, 'company_reset_password'])->name('company_reset_password');
 Route::post('reset-password/company/submit', [ForgetPasswordController::class, 'company_reset_password_submit'])->name('company_reset_password_submit');
 
-
 /* Company Middleware */
-Route::middleware(['company:company'])->group(function() {
+Route::middleware(['company:company'])->group(function () {
     Route::get('/company/dashboard', [CompanyController::class, 'dashboard'])->name('company_dashboard');
     Route::get('/company/make-payment', [CompanyController::class, 'make_payment'])->name('company_make_payment');
     Route::get('/company/orders', [CompanyController::class, 'orders'])->name('company_orders');
@@ -133,9 +127,7 @@ Route::middleware(['company:company'])->group(function() {
     Route::get('/company/applicant-resume/{id}', [CompanyController::class, 'applicant_resume'])->name('company_applicant_resume');
     Route::post('/company/application-status-change', [CompanyController::class, 'application_status_change'])->name('company_application_status_change');
 
-
 });
-
 
 /* Candidate */
 Route::post('candidate_login_submit', [LoginController::class, 'candidate_login_submit'])->name('candidate_login_submit');
@@ -147,9 +139,8 @@ Route::post('forget-password/candidate/submit', [ForgetPasswordController::class
 Route::get('reset-password/candidate/{token}/{email}', [ForgetPasswordController::class, 'candidate_reset_password'])->name('candidate_reset_password');
 Route::post('reset-password/candidate/submit', [ForgetPasswordController::class, 'candidate_reset_password_submit'])->name('candidate_reset_password_submit');
 
-
 /* Candidate Middleware */
-Route::middleware(['candidate:candidate'])->group(function() {
+Route::middleware(['candidate:candidate'])->group(function () {
     Route::get('/candidate/dashboard', [CandidateController::class, 'dashboard'])->name('candidate_dashboard');
     Route::get('/candidate/edit-profile', [CandidateController::class, 'edit_profile'])->name('candidate_edit_profile');
     Route::post('/candidate/edit-profile/update', [CandidateController::class, 'edit_profile_update'])->name('candidate_edit_profile_update');
@@ -191,7 +182,6 @@ Route::middleware(['candidate:candidate'])->group(function() {
     Route::post('/candidate/resume/update/{id}', [CandidateController::class, 'resume_update'])->name('candidate_resume_update');
     Route::get('/candidate/resume/delete/{id}', [CandidateController::class, 'resume_delete'])->name('candidate_resume_delete');
 
-
     Route::get('/candidate/bookmark-add/{id}', [CandidateController::class, 'bookmark_add'])->name('candidate_bookmark_add');
     Route::get('/candidate/bookmark-view', [CandidateController::class, 'bookmark_view'])->name('candidate_bookmark_view');
     Route::get('/candidate/bookmark-delete/{id}', [CandidateController::class, 'bookmark_delete'])->name('candidate_bookmark_delete');
@@ -202,7 +192,6 @@ Route::middleware(['candidate:candidate'])->group(function() {
 
 });
 
-
 /* Admin */
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
 Route::post('/admin/login-submit', [AdminLoginController::class, 'login_submit'])->name('admin_login_submit');
@@ -212,9 +201,8 @@ Route::post('/admin/forget-password-submit', [AdminLoginController::class, 'forg
 Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name('admin_reset_password');
 Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
 
-
 /* Admin Middleware */
-Route::middleware(['admin:admin'])->group(function() {
+Route::middleware(['admin:admin'])->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('admin_home');
     Route::get('/admin/edit-profile', [AdminProfileController::class, 'index'])->name('admin_profile');
     Route::post('/admin/edit-profile-submit', [AdminProfileController::class, 'profile_submit'])->name('admin_profile_submit');
@@ -245,7 +233,7 @@ Route::middleware(['admin:admin'])->group(function() {
 
     Route::get('/admin/other-page', [AdminOtherPageController::class, 'index'])->name('admin_other_page');
     Route::post('/admin/other-page/update', [AdminOtherPageController::class, 'update'])->name('admin_other_page_update');
-    
+
     Route::get('/admin/job-category/view', [AdminJobCategoryController::class, 'index'])->name('admin_job_category');
     Route::get('/admin/job-category/create', [AdminJobCategoryController::class, 'create'])->name('admin_job_category_create');
     Route::post('/admin/job-category/store', [AdminJobCategoryController::class, 'store'])->name('admin_job_category_store');
@@ -369,5 +357,8 @@ Route::middleware(['admin:admin'])->group(function() {
     Route::get('/admin/candidates-detail/{id}', [AdminCandidateController::class, 'candidates_detail'])->name('admin_candidates_detail');
     Route::get('/admin/candidates-applied-jobs/{id}', [AdminCandidateController::class, 'candidates_applied_jobs'])->name('admin_candidates_applied_jobs');
     Route::get('/admin/candidates-delete/{id}', [AdminCandidateController::class, 'delete'])->name('admin_candidates_delete');
-    
+
 });
+
+Route::get('/testEmail', [TestController::class, 'testEmail']);
+Route::get('/testSms', [TestController::class, 'testSms']);

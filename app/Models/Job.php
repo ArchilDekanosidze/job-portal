@@ -9,6 +9,8 @@ class Job extends Model
 {
     use HasFactory;
 
+    protected $table = "jobs_data";
+
     public function rCompany()
     {
         return $this->belongsTo(Company::class, 'company_id');
